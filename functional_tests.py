@@ -14,9 +14,7 @@ class newVisitorTest(unittest.TestCase):
         options = Options()
         options.add_argument("--headless")  # Run in headless mode
         options.add_argument("--no-sandbox")
-        options.add_argument(
-            "--disable-dev-shm-usage"
-        )  # Overcomes some limitations in a shared env
+        options.add_argument("--disable-dev-shm-usage")  # Overcomes some limitations in a shared env
         self.browser = webdriver.Chrome(options=options)
 
     def tearDown(self):
@@ -53,7 +51,8 @@ class newVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element(By.ID, "id_list_table")
         rows = table.find_elements(By.TAG_NAME, "tr")  
-        self.assertTrue(any(row.text == "1: Buy peacock feathers" for row in rows))
+        self.assertTrue(any(row.text == "1: Buy peacock feathers" for row in rows),
+        "New to-do item did not appear in table")
 
         # There is still a text box inviting her to add another item.
         # She enters "Use peacock feathers to make a fly"
