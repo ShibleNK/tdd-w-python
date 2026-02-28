@@ -3,14 +3,10 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
-
 import unittest
 
 class newVisitorTest(unittest.TestCase):
     def setUp(self):
-        
-
-
         options = Options()
         options.add_argument("--headless")  # Run in headless mode
         options.add_argument("--no-sandbox")
@@ -27,9 +23,6 @@ class newVisitorTest(unittest.TestCase):
 
         # She notices the page title and header mention to-do lists
         self.assertIn("To-Do", self.browser.title)
-        
-
-
 
         # She notices the page title and header mention to-do lists
         self.assertIn("To-Do", self.browser.title)
