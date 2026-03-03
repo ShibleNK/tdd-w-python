@@ -60,8 +60,12 @@ class newVisitorTest(unittest.TestCase):
         # The page updates again, and now shows both items on her list
         table = self.browser.find_element(By.ID, "id_list_table")
         rows = table.find_elements(By.TAG_NAME, "tr")  
-        self.assertIn("2: Buy peacock feathers to make a fly", [row.text for row in rows])
-        self.assertIn("1: Buy peacock feathers", [row.text for row in rows])
+        self.assertIn(
+            "2: Use peacock feathers to make a fly",
+            [row.text for row in rows])
+        self.assertIn(
+            "1: Buy peacock feathers",
+              [row.text for row in rows])
         # Satisfied, she goes back to sleep
      
 if __name__ == "__main__":
