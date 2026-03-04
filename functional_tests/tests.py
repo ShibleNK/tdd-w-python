@@ -3,9 +3,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
+from django.test import LiveServerTestCase
 
-class newVisitorTest(unittest.TestCase):
+class newVisitorTest(LiveServerTestCase):
     def setUp(self):
         options = Options()
         options.add_argument("--headless")  # Run in headless mode
@@ -24,7 +24,7 @@ class newVisitorTest(unittest.TestCase):
     def test_can_start_a_todo_list(self):
         # Edith has heard about a cool new online to-do app.
         # She goes to check out its homepage
-        self.browser.get("http://localhost:8000")
+        self.browser.get(self.live_server_url)
 
 
 
@@ -68,5 +68,3 @@ class newVisitorTest(unittest.TestCase):
               [row.text for row in rows])
         # Satisfied, she goes back to sleep
      
-if __name__ == "__main__":
-    unittest.main()
