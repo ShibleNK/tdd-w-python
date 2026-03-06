@@ -10,8 +10,8 @@ class HomePageTest(TestCase):
 
     def test_renders_input_form(self):  
         response = self.client.get("/")
-        self.assertContains(response, '<form method="POST">')
-        self.assertContains(respons, '<input name="item_text"')
+        self.assertContains(response, '<form method="POST" action="/">')
+        self.assertContains(response, '<input name="item_text"')
     
     def test_can_save_a_POST_request(self):
         response = self.client.post("/", data={"item_text": "A new list item"})
@@ -29,6 +29,10 @@ class HomePageTest(TestCase):
         self.assertEqual(Item.objects.count(), 0)
 
 class ListViewTest(TestCase):
+    def test_uses_home_template(self):
+        response = self.client.get("/lists/the-only-list-in-the-world")
+        self.assertTemplateUsed(response, "list.html")
+
     def test_renders_input_form(self):  
         response = self.client.get("/lists/the-only-list-in-the-world")
         self.assertContains(response, '<form method="POST" action="/">')
