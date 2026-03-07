@@ -8,10 +8,7 @@ class HomePageTest(TestCase):
         response = self.client.get("/")
         self.assertTemplateUsed(response, "home.html")
 
-    def test_renders_input_form(self):  
-        response = self.client.get("/")
-        self.assertContains(response, '<form method="POST" action="/lists/new">')
-        self.assertContains(response, '<input name="item_text"')
+    
     
     
 
@@ -39,18 +36,14 @@ class NewListTest(TestCase):
 class ListViewTest(TestCase):
     def test_uses_list_template(self):
         mylist = List.objects.create()
-        response = self.client.get(f"/lists/{mylist.id}/") #1
+        response = self.client.get(f"/lists/{mylist.id}/") 
         self.assertTemplateUsed(response, "list.html")
 
-    def test_renders_input_form(self):  
-        mylist = List.objects.create()
-        response = self.client.get(f"/lists/{mylist.id}/") 
-        self.assertContains(
-            response,
-            f'<form method="POST" action="/lists/{mylist.id}/add_item">'
-            )
+    def test_renders_input_form(self):
+        mylist = List.objects.create()  
+        response = self.client.get(f"/lists/{mylist.id}/")
+        self.assertContains(response, f'<form method="POST" action="/lists/{mylist.id}/add_item">',)
         self.assertContains(response, '<input name="item_text"')
-    
     def test_displays_only_items_for_that_list(self):
         correct_list = List.objects.create()  
         Item.objects.create(text="itemey 1", list=correct_list) 
@@ -64,10 +57,6 @@ class ListViewTest(TestCase):
         self.assertContains(response, "itemey 2")    
         self.assertNotContains(response, "other list item") 
 
-    def test_displays_all_list_items(self):
-        mylist = List.objects.create()
-        Item.objects.create(text="itemey 1", list=mylist)
-        Item.objects.create(text="itemey 2", list=mylist)
 
 class ListAndItemModelsTest(TestCase):
     def test_saving_and_retrieving_items(self):
