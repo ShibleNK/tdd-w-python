@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.http import HttpRequest
 from lists.views import home_page
-from lists.models import Item
+from lists.models import Item, List
 
 class HomePageTest(TestCase):
     def test_uses_home_template(self):
@@ -49,14 +49,24 @@ class ListViewTest(TestCase):
         self.assertContains(response, "itemey 1")
         self.assertContains(response, "itemey 2")    
 
-class ItemModelTest(TestCase):
+    def test_displays_all_list_items(self):
+        mylist = List.objects.create()
+        Item.objects.create(text="itemey 1", list=mylist)
+        Item.objects.create(text="itemey 2", list=mylist)
+
+class ListAndItemModelsTest(TestCase):
     def test_saving_and_retrieving_items(self):
+        mylist = List()
+        mylist.save()
+
         first_item = Item()
         first_item.text = "The first (ever) list item"
+        first_item.list = mylist
         first_item.save()
 
         second_item = Item()
         second_item.text = "Item the second"
+        second_item.list = mylist
         second_item.save()
 
         saved_items = Item.objects.all()
@@ -65,5 +75,7 @@ class ItemModelTest(TestCase):
         first_save_item = saved_items[0]
         second_save_item = saved_items[1]
         self.assertEqual(first_save_item.text, "The first (ever) list item")
+        self.assertEqual(first_save_item.list, mylist)
         self.assertEqual(second_save_item.text, "Item the second")
+        self.assertEqual(second_save_item.list, mylist)
         
