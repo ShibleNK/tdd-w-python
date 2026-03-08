@@ -4,10 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 import time
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 MAX_WAIT = 5        
-class newVisitorTest(LiveServerTestCase):
+class newVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         options = Options()
         options.add_argument("--headless")  # Run in headless mode
