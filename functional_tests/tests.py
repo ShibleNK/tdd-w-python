@@ -1,3 +1,4 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -14,6 +15,8 @@ class newVisitorTest(StaticLiveServerTestCase):
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")  # Overcomes some limitations in a shared env
         self.browser = webdriver.Chrome(options=options)
+        if test_server := os.environ.get("TEST_SERVER"): #1 #2
+            self.live_server_url = "http://" + test_server #3
 
     def tearDown(self):
         self.browser.quit()
